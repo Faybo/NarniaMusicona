@@ -1,7 +1,7 @@
 "use client";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
-import { FaUserAlt } from "react-icons/fa";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from "react-hot-toast";
 import { HiHome } from "react-icons/hi";
@@ -40,11 +40,11 @@ const Header: React.FC<HeaderProps> = ({
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success('Logged out!')
+      toast.success('Até logo!')
     }
   };
 
-  const onClick = () => {
+  const handleUpload = () => {
     if (!user) {
       return authModal.onOpen();
     }
@@ -54,135 +54,90 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <div
       className={twMerge(`
+        w-full
         h-fit 
-        bg-gradient-to-b 
-        from-emerald-800 
+        bg-gradient-to-b from-black via-purple-900/10 to-black
         p-6
         `,
         className
       )}
     >
-      <div className="w-full mb-4 flex items-center justify-between">
-        <div className="hidden md:flex gap-x-2 items-center">
-          <button
-            onClick={() => router.back()}
-            className="
-              rounded-full 
-              bg-black 
-              flex 
-              items-center 
-              justify-center 
-              cursor-pointer 
-              hover:opacity-75 
-              transition
-            "
-          >
-            <RxCaretLeft className="text-white" size={35} />
-          </button>
-          <button
-            onClick={() => router.forward()}
-            className="
-              rounded-full 
-              bg-black 
-              flex 
-              items-center 
-              justify-center 
-              cursor-pointer 
-              hover:opacity-75 
-              transition
-            "
-          >
-            <RxCaretRight className="text-white" size={35} />
-          </button>
-        </div>
-        <div className="flex md:hidden gap-x-2 items-center">
-          <button
-            onClick={() => router.push('/')}
-            className="
-              rounded-full 
-              p-2 
-              bg-white 
-              flex 
-              items-center 
-              justify-center 
-              cursor-pointer 
-              hover:opacity-75 
-              transition
-            "
-          >
-            <HiHome className="text-black" size={20} />
-          </button>
-          <button
-            onClick={() => router.push('/search')}
-            className="
-              rounded-full 
-              p-2 
-              bg-white 
-              flex 
-              items-center 
-              justify-center 
-              cursor-pointer 
-              hover:opacity-75 
-              transition
-            "
-          >
-            <BiSearch className="text-black" size={20} />
-          </button>
-        </div>
-        <div className="flex justify-between items-center gap-x-4">
-          {user ? (
-            <div className="flex gap-x-4 items-center">
-              <div>
-                <AiOutlinePlus
-                  onClick={onClick}
-                  size={30}
-                  className="shadow-neon-red sm:opacity-0 lg:opacity-0 text-neutral-400 sm:cursor-pointer hover:text-white transition"
-                />
-              </div>
-              <Button 
-                onClick={handleLogout} 
-                className="bg-white px-6 py-2"
-              >
-                Logout
-              </Button>
-              <Button 
-                onClick={() => router.push('/account')} 
-                className="bg-white"
-              >
-                <FaUserAlt />
-              </Button>
-            </div>
-          ) : (
-            <>
-              <div>
+      <div className="max-w-[2000px] mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+          </div>
+          <div className="flex items-center gap-x-4">
+            {user ? (
+              <>
                 <Button 
-                  onClick={authModal.onOpen} 
+                  onClick={handleUpload}
                   className="
-                    bg-transparent 
-                    text-neutral-300 
-                    font-medium
+                    bg-gradient-to-r from-purple-600 to-purple-900
+                    hover:bg-gradient-to-l hover:from-purple-900 hover:to-purple-600
+                    text-white
+                    px-8
+                    py-2
+                    rounded-full
+                    flex 
+                    items-center 
+                    gap-x-2 
+                    font-semibold
+                    transform
+                    hover:scale-105
+                    transition-all
+                    duration-300
+                    shadow-lg
+                    hover:shadow-purple-600/50
+                    min-w-[140px]
+                    justify-center
                   "
                 >
-                  Sign up
+                  <FaCloudUploadAlt size={20} />
+                  Upload
                 </Button>
-              </div>
-              <div>
                 <Button 
-                  onClick={authModal.onOpen} 
-                  className="bg-white px-6 py-2"
+                  onClick={handleLogout} 
+                  className="
+                    bg-gradient-to-r from-purple-600 to-purple-900
+                    hover:bg-gradient-to-l hover:from-purple-900 hover:to-purple-600
+                    text-white
+                    px-8
+                    py-2
+                    rounded-full
+                    font-semibold
+                    transition-all
+                    duration-300
+                    min-w-[140px]
+                    justify-center
+                  "
                 >
-                  Log in
+                  Sair
                 </Button>
-              </div>
-            </>
-          )}
+              </>
+            ) : (
+              <Button 
+                onClick={authModal.onOpen} 
+                className="
+                  bg-gradient-to-r from-purple-600 to-purple-900
+                  hover:bg-gradient-to-l hover:from-purple-900 hover:to-purple-600
+                  text-white
+                  px-8
+                  py-2
+                  rounded-full
+                  font-semibold
+                  transition-all
+                  duration-300
+                  min-w-[140px]
+                  justify-center
+                "
+              >
+                Entrar
+              </Button>
+            )}
+          </div>
         </div>
+        {children}
       </div>
-      <div className="sm:animate-bounce text-center text-white text-4xl font-semibold">
-        Narnia Crib Music
-      </div>
-      <p className="text-center text-white sm:animate-ping font-semibold">Original Music Only</p>
-      {children}
     </div>
   );
 }

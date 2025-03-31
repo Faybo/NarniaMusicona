@@ -4,32 +4,38 @@ import { useSessionContext } from "@supabase/auth-helpers-react";
 
 import { Song } from "@/types";
 
-const useSongById = (id?: string) => {
+const useGetSongById = (id?: string) => {
   const [isLoading, setIsLoading] = useState(false);
   const [song, setSong] = useState<Song | undefined>(undefined);
   const { supabaseClient } = useSessionContext();
 
   useEffect(() => {
-    if (!id) {
+    if (!id || id === 'undefined') {
+      setSong(undefined);
       return;
     }
 
     setIsLoading(true);
 
     const fetchSong = async () => {
-      const { data, error } = await supabaseClient
-        .from('songs')
-        .select('*')
-        .eq('id', id)
-        .single();
+      try {
+        const { data, error } = await supabaseClient
+          .from('songs')
+          .select('*')
+          .eq('id', id)
+          .single();
 
-      if (error) {
+        if (error) {
+          setIsLoading(false);
+          return;
+        }
+        
+        setSong(data as Song);
+      } catch (error) {
+        console.error('Error fetching song:', error);
+      } finally {
         setIsLoading(false);
-        return toast.error(error.message);
       }
-      
-      setSong(data as Song);
-      setIsLoading(false);
     }
 
     fetchSong();
@@ -41,4 +47,4 @@ const useSongById = (id?: string) => {
   }), [isLoading, song]);
 };
 
-export default useSongById;
+export default useGetSongById;

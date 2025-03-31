@@ -5,31 +5,27 @@ import PageContent from "./components/Pagecontent";
 
 export const revalidate = 0;
 
-
 export default async function Home() {
   const songs = await getSongs();
 
   return (
-    <div className=" shadow-neon-red bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto">
+    <div className="
+      bg-gradient-to-b from-black via-purple-900/10 to-black
+      h-full
+      w-full
+      overflow-hidden
+      overflow-y-auto
+    ">
       <Header>
-        <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4">
-            <ListItem
-              image="/images/liked.jpg"
-              name="Your Liked Songs Playlist"
-              href="liked"
-            />
-          </div>
-        </div>
-      </Header>
-      <div className="mt-2 mb-7 px-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-2xl font-semibold">
-              All Songs
+        <div className="mb-6 mt-6 text-center">
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-purple-400 to-purple-800 bg-clip-text text-transparent animate-pulse">
+            Narnia Crib Original Music
           </h1>
         </div>
+      </Header>
+      <div className="px-6">
         <PageContent songs={songs} />
       </div>
     </div>
   )
-}
+} 
