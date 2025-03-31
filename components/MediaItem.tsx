@@ -32,7 +32,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick}) => {
                     {data.title}
                 </p>
                 <p className="text-neutral-400 text-sm truncate">
-                    {data.author}
+                    {data.artist}
                 </p>
 
             </div>

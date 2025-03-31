@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
+import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
@@ -29,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({
   const uploadModal = useUploadModal();
 
   const supabaseClient = useSupabaseClient();
-  const { user, userDetails } = useUser();
+  const { user } = useUser();
 
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
@@ -38,12 +39,14 @@ const Header: React.FC<HeaderProps> = ({
 
     if (error) {
       toast.error(error.message);
+    } else {
+      toast.success('Logged out!')
     }
   };
 
   const onClick = () => {
     if (!user) {
-        return authModal.onOpen();
+      return authModal.onOpen();
     }
     return uploadModal.onOpen();
   };
@@ -53,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
       className={twMerge(`
         h-fit 
         bg-gradient-to-b 
-        from-blue-900
+        from-emerald-800 
         p-6
         `,
         className
@@ -61,10 +64,40 @@ const Header: React.FC<HeaderProps> = ({
     >
       <div className="w-full mb-4 flex items-center justify-between">
         <div className="hidden md:flex gap-x-2 items-center">
+          <button
+            onClick={() => router.back()}
+            className="
+              rounded-full 
+              bg-black 
+              flex 
+              items-center 
+              justify-center 
+              cursor-pointer 
+              hover:opacity-75 
+              transition
+            "
+          >
+            <RxCaretLeft className="text-white" size={35} />
+          </button>
+          <button
+            onClick={() => router.forward()}
+            className="
+              rounded-full 
+              bg-black 
+              flex 
+              items-center 
+              justify-center 
+              cursor-pointer 
+              hover:opacity-75 
+              transition
+            "
+          >
+            <RxCaretRight className="text-white" size={35} />
+          </button>
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
-          <button 
-            onClick={() => router.push('/')} 
+          <button
+            onClick={() => router.push('/')}
             className="
               rounded-full 
               p-2 
@@ -79,8 +112,8 @@ const Header: React.FC<HeaderProps> = ({
           >
             <HiHome className="text-black" size={20} />
           </button>
-          <button 
-            onClick={() => router.push('/search')} 
+          <button
+            onClick={() => router.push('/search')}
             className="
               rounded-full 
               p-2 
@@ -99,13 +132,6 @@ const Header: React.FC<HeaderProps> = ({
         <div className="flex justify-between items-center gap-x-4">
           {user ? (
             <div className="flex gap-x-4 items-center">
-              <div>
-                <AiOutlinePlus
-                  onClick={onClick}
-                  size={30}
-                  className="shadow-neon-red sm:opacity-0 lg:opacity-0 text-neutral-400 sm:cursor-pointer hover:text-white transition"
-                />
-              </div>
               <Button 
                 onClick={handleLogout} 
                 className="bg-white px-6 py-2"
@@ -118,7 +144,6 @@ const Header: React.FC<HeaderProps> = ({
               >
                 <FaUserAlt />
               </Button>
-              
             </div>
           ) : (
             <>
@@ -146,19 +171,23 @@ const Header: React.FC<HeaderProps> = ({
           )}
         </div>
       </div>
-      <div className=" sm:animate-bounce text-center text-white text-4xl font-semibold">
+      <div className="sm:animate-bounce text-center text-white text-4xl font-semibold">
         Narnia Crib Music
       </div>
       <p className="text-center text-white sm:animate-ping font-semibold">Original Music Only</p>
-      <div>
-        {/* Verifique se o nome de artista está ausente e mostre a mensagem de aviso */}
-        {user && !userDetails?.username && (
-          <div className="flex items-center gap-x-2 text-red-500 font-semibold text-sm animate-pulse">
-            Atualize seu nome de artista na página do seu perfil antes de fazer upload de uma música.
-            <FaUserAlt className="text-red-500 text-md animate-bounce" />
-          </div>
-        )}
-      </div>
+      
+      {user && (
+        <div className="flex justify-center mt-4">
+          <Button
+            onClick={onClick}
+            className="bg-white px-6 py-3 flex items-center gap-x-2 hover:scale-105 transition"
+          >
+            <AiOutlinePlus size={25} className="text-black" />
+            <span className="font-bold text-black">Adicionar Nova Música</span>
+          </Button>
+        </div>
+      )}
+
       {children}
     </div>
   );

@@ -42,6 +42,6 @@
   "devDependencies": {
     "@types/uniqid": "^5.3.2",
     "file-loader": "^6.2.0",
-    "supabase": "^1.86.2"
+    "supabase": "^1.226.4"
   }
 }
