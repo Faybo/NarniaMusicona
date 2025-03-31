@@ -132,6 +132,13 @@ const Header: React.FC<HeaderProps> = ({
         <div className="flex justify-between items-center gap-x-4">
           {user ? (
             <div className="flex gap-x-4 items-center">
+              <div>
+                <AiOutlinePlus
+                  onClick={onClick}
+                  size={30}
+                  className="shadow-neon-red sm:opacity-0 lg:opacity-0 text-neutral-400 sm:cursor-pointer hover:text-white transition"
+                />
+              </div>
               <Button 
                 onClick={handleLogout} 
                 className="bg-white px-6 py-2"
@@ -175,19 +182,6 @@ const Header: React.FC<HeaderProps> = ({
         Narnia Crib Music
       </div>
       <p className="text-center text-white sm:animate-ping font-semibold">Original Music Only</p>
-      
-      {user && (
-        <div className="flex justify-center mt-4">
-          <Button
-            onClick={onClick}
-            className="bg-white px-6 py-3 flex items-center gap-x-2 hover:scale-105 transition"
-          >
-            <AiOutlinePlus size={25} className="text-black" />
-            <span className="font-bold text-black">Adicionar Nova Música</span>
-          </Button>
-        </div>
-      )}
-
       {children}
     </div>
   );
