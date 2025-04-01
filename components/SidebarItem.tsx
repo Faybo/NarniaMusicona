@@ -23,24 +23,19 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, active, hr
                 text-sm
                 font-medium 
                 cursor-pointer 
-                transition 
+                transition-all
+                duration-300
                 text-neutral-400 
                 py-2
                 px-3
-                rounded-lg
-                hover:bg-purple-900/20
-                hover:text-white
+                hover:text-purple-400
                 group
-                relative
                 `,
-                active && "text-white bg-purple-900/30"
+                active && "text-purple-400"
             )}
         >
             <Icon size={20} className="transition-transform group-hover:scale-110"/>
             <p className="truncate w-full">{label}</p>
-            {active && (
-                <div className="absolute left-0 top-0 h-full w-1 bg-purple-500 rounded-r-full"/>
-            )}
         </Link>
     );
 }

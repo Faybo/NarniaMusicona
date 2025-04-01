@@ -15,10 +15,11 @@ export default async function Home() {
       w-full
       overflow-hidden
       overflow-y-auto
+      pt-2
     ">
       <Header>
-        <div className="mb-6 mt-6 text-center">
-          <h1 className="text-6xl font-bold bg-gradient-to-r from-purple-400 to-purple-800 bg-clip-text text-transparent animate-pulse">
+        <div className="mb-2 -mt-4 text-center">
+          <h1 className="text-7xl font-bold bg-gradient-to-r from-purple-400 to-purple-800 bg-clip-text text-transparent animate-pulse">
             Narnia Crib Original Music
           </h1>
         </div>

@@ -39,15 +39,14 @@ const Sidebar = ({ children }: SidebarProps) => {
           left-0
           top-0
           z-20
+          border-r border-purple-900/20
         "
       >
-        <Box className="bg-black/90 backdrop-blur-sm">
-          <div className="flex flex-col gap-y-4 px-3 py-2">
-            {routes.map((item) => (
-              <SidebarItem key={item.label} {...item} />
-            ))}
-          </div>
-        </Box>
+        <div className="flex flex-col gap-y-4 px-3 py-2">
+          {routes.map((item) => (
+            <SidebarItem key={item.label} {...item} />
+          ))}
+        </div>
       </div>
       <main className="flex-1 h-full ml-0 md:ml-[200px] overflow-hidden">
         {children}
